@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Topics</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/natural@0.6.3/lib/natural.js"></script> -->
+
+    <style>
+        /* Basic CSS styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Questions</h2>
+        <textarea id="questionsInput" rows="6" placeholder="Enter your questions here"></textarea>
+        <button onclick="extractTopics()">Extract Topics</button>
+        <h2>Topics Covered</h2>
+        <ul id="topicsList"></ul>
+    </div>
+
+    <!-- Include Natural library -->
+    <script src="https://cdn.jsdelivr.net/npm/natural@0.6.3/lib/natural.js"></script>
+
+    <script>
+        function extractTopics() {
+            var questions = document.getElementById('questionsInput').value;
+            var topicsList = document.getElementById('topicsList');
+
+            // Clear previous topics
+            topicsList.innerHTML = '';
+
+            // Tokenize the input questions
+            var tokenizer = new natural.WordTokenizer();
+            var tokens = tokenizer.tokenize(questions);
+
+            // Define keywords for topics
+            var topicKeywords = {
+                'math': 'Mathematics',
+                'science': 'Science',
+                // Add more keywords and corresponding topics as needed
+            };
+
+            // Extract topics from tokens
+            var topics = [];
+            tokens.forEach(function(token) {
+                var lowercaseToken = token.toLowerCase();
+                if (topicKeywords.hasOwnProperty(lowercaseToken)) {
+                    var topic = topicKeywords[lowercaseToken];
+                    if (!topics.includes(topic)) {
+                        topics.push(topic);
+                    }
+                }
+            });
+
+            // Display extracted topics
+            topics.forEach(function(topic) {
+                var li = document.createElement('li');
+                li.textContent = topic;
+                topicsList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
