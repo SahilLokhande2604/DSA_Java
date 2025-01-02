@@ -5,7 +5,7 @@ public class NQueens {
     private void saveBoardInAns(List<List<Integer>>ans, int[][] board){
         List<Integer>temp=new ArrayList<>();
         for(int i=0;i<board.length;i++){
-            for(int j=0;j<board[0].length;j++){
+            for(int j=0;j<board[0].length;j++){ 
                 temp.add(board[i][j]);
             }
         }
